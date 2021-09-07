@@ -57,7 +57,8 @@ lazy val dataset = project
     libraryDependencies ++= Seq(
       "org.apache.spark" %% "spark-core"      % sparkVersion % Provided,
       "org.apache.spark" %% "spark-sql"       % sparkVersion % Provided,
-      "net.ceedubs"      %% "irrec-regex-gen" % irrecVersion % Test
+      "net.ceedubs"      %% "irrec-regex-gen" % irrecVersion % Test,
+      "eu.timepit"       %% "refined"         % "0.9.27"     % Test
     ),
     mimaBinaryIssueFilters ++= {
       import com.typesafe.tools.mima.core._

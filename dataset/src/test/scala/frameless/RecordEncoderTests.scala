@@ -1,13 +1,11 @@
 package frameless
 
-import org.apache.spark.sql.{Row, functions => F}
-import org.apache.spark.sql.types.{
-  IntegerType, LongType, ObjectType, StringType, StructField, StructType
-}
-
+import eu.timepit.refined.types.string.NonEmptyString
+import org.apache.spark.sql.catalyst.encoders.ExpressionEncoder
+import org.apache.spark.sql.{DataFrame, Row, functions => F}
+import org.apache.spark.sql.types.{IntegerType, LongType, ObjectType, StringType, StructField, StructType}
 import shapeless.{HList, LabelledGeneric}
 import shapeless.test.illTyped
-
 import org.scalatest.matchers.should.Matchers
 
 case class UnitsOnly(a: Unit, b: Unit)
@@ -32,6 +30,34 @@ object RecordEncoderTests {
   case class Person(name: Name, age: Int)
 
   case class User(id: Long, name: Option[Name])
+}
+
+object RefinedTypesTests {
+  import cats.syntax.either._
+  import eu.timepit.refined.auto._
+  //import eu.timepit.refined.types.numeric.PosInt
+  import eu.timepit.refined.types.string.NonEmptyString
+  import eu.timepit.refined.api.{RefType, Validate}
+
+  implicit def refinedInjection[F[_, _], T, R](implicit refType: RefType[F], validate: Validate[T, R]): Injection[F[T, R], T] =
+    Injection(refType.unwrap, value => refType.refine[R](value).valueOr(errMsg => throw new IllegalArgumentException(s"Value $value does not satisfy refinement predicate: $errMsg")))
+
+  /** TypedExpressionEncoder upcasts ExpressionEncoder up to Encoder, we need an ExpressionEncoder there */
+  def typedToExpressionEncoder[T: TypedEncoder]: ExpressionEncoder[T] =
+    TypedExpressionEncoder[T].asInstanceOf[ExpressionEncoder[T]]
+
+  case class A(a: Int, s: NonEmptyString)
+  case class B(a: Int, s: Option[NonEmptyString])
+
+  val nes: NonEmptyString = "Non Empty String"
+
+  val as = A(-42, nes)
+  val bs = B(-42, Option(nes))
+
+  implicit val encoderA = TypedEncoder[A]
+  implicit val encoderB = TypedEncoder[B]
+  implicit val encoderNES = TypedEncoder[NonEmptyString]
+  implicit val expressionEncoderNES = typedToExpressionEncoder[NonEmptyString]
 }
 
 class RecordEncoderTests extends TypedDatasetSuite with Matchers {
@@ -226,4 +252,82 @@ class RecordEncoderTests extends TypedDatasetSuite with Matchers {
     // Safely created ds
     TypedDataset.create(expected).collect.run() shouldBe expected
   }
+
+  test("Case class with an optional refined field") {
+    import RefinedTypesTests._
+
+    encoderB.jvmRepr shouldBe ObjectType(classOf[B])
+
+    val expectedBStructType = StructType(Seq(
+      StructField("a", IntegerType, false),
+      StructField("s", StringType, true)))
+
+    encoderB.catalystRepr shouldBe expectedBStructType
+
+    val unsafeDs: TypedDataset[B] = {
+      val rdd = sc.parallelize(Seq(
+        Row(bs.a, bs.s.map(_.value).get)
+      ))
+      val df = session.createDataFrame(rdd, expectedBStructType)
+
+      TypedDataset.createUnsafe(df)(encoderB)
+    }
+
+    val expected = Seq(bs)
+
+    unsafeDs.collect.run() shouldBe expected
+
+    // Safely created DS
+    val safeDs = TypedDataset.create(expected)
+
+    safeDs.collect.run() shouldBe expected
+  }
+
+  test("Encode a bare refined type") {
+    import RefinedTypesTests._
+    val ss = session
+    import ss.implicits._
+
+    val expectedNESStructType = StringType
+
+    encoderNES.catalystRepr shouldBe expectedNESStructType
+
+    val unsafeDs: DataFrame = sc.parallelize(Seq(nes.value)).toDF()
+
+    val expected = Seq(nes)
+
+    unsafeDs.as[NonEmptyString].collect.toSeq shouldBe expected
+  }
+
+  test("Case class with a refined field") {
+    import RefinedTypesTests._
+
+    encoderA.jvmRepr shouldBe ObjectType(classOf[B])
+
+    val expectedBStructType = StructType(Seq(
+      StructField("a", IntegerType, false),
+      StructField("s", StringType, true)))
+
+    encoderA.catalystRepr shouldBe expectedBStructType
+
+    val unsafeDs: TypedDataset[A] = {
+      val rdd = sc.parallelize(Seq(
+        Row(as.a, as.s)
+      ))
+      val df = session.createDataFrame(rdd, expectedBStructType)
+
+      TypedDataset.createUnsafe(df)(encoderA)
+    }
+
+    val expected = Seq(as)
+
+    unsafeDs.collect.run() shouldBe expected
+
+    // Safely created DS
+    val safeDs = TypedDataset.create(expected)
+
+    safeDs.collect.run() shouldBe expected
+  }
+
+
 }
