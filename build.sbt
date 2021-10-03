@@ -1,4 +1,12 @@
-val sparkVersion = "3.1.2"
+def ver(for212: String, for213: String) = Def.setting {
+  CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((2, 12)) => for212
+    case Some((2, 13)) => for213
+    case _             => sys.error("not good")
+  }
+}
+
+val sparkVersion = Def.setting(ver("3.1.2", "3.2.0-SNAPSHOT").value)
 val catsCoreVersion = "2.6.1"
 val catsEffectVersion = "2.4.0"
 val catsMtlVersion = "0.7.1"
@@ -6,15 +14,16 @@ val scalatest = "3.2.9"
 val scalatestplus = "3.1.0.0-RC2"
 val shapeless = "2.3.7"
 val scalacheck = "1.15.4"
-val irrecVersion = "0.4.0"
+val irrecVersion = "0.4.0+29-00cfc424-SNAPSHOT" // "0.4.0"
 
 val Scala212 = "2.12.15"
+val Scala213 = "2.13.6"
 
 val previousVersion = "0.10.1"
 
 ThisBuild / versionScheme := Some("semver-spec")
 
-ThisBuild / crossScalaVersions := Seq(Scala212)
+ThisBuild / crossScalaVersions := Seq(Scala212, Scala213)
 ThisBuild / scalaVersion := (ThisBuild / crossScalaVersions).value.last
 
 ThisBuild / mimaFailOnNoPrevious := false
@@ -37,15 +46,18 @@ lazy val cats = project
   .settings(publishSettings: _*)
   .settings(
     addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full),
-    scalacOptions += "-Ypartial-unification"
+    scalacOptions ++= { CrossVersion.partialVersion(scalaVersion.value) match {
+      case Some((2, 13)) => Seq()
+      case _ => Seq("-Ypartial-unification")
+    } }
   )
   .settings(libraryDependencies ++= Seq(
     "org.typelevel"    %% "cats-core"      % catsCoreVersion,
     "org.typelevel"    %% "cats-effect"    % catsEffectVersion,
     "org.typelevel"    %% "cats-mtl-core"  % catsMtlVersion,
     "org.typelevel"    %% "alleycats-core" % catsCoreVersion,
-    "org.apache.spark" %% "spark-core"     % sparkVersion % Provided,
-    "org.apache.spark" %% "spark-sql"      % sparkVersion % Provided))
+    "org.apache.spark" %% "spark-core"     % sparkVersion.value % Provided,
+    "org.apache.spark" %% "spark-sql"      % sparkVersion.value % Provided))
   .dependsOn(dataset % "test->test;compile->compile")
 
 lazy val dataset = project
@@ -55,8 +67,8 @@ lazy val dataset = project
   .settings(publishSettings)
   .settings(Seq(
     libraryDependencies ++= Seq(
-      "org.apache.spark" %% "spark-core"      % sparkVersion % Provided,
-      "org.apache.spark" %% "spark-sql"       % sparkVersion % Provided,
+      "org.apache.spark" %% "spark-core"      % sparkVersion.value % Provided,
+      "org.apache.spark" %% "spark-sql"       % sparkVersion.value % Provided,
       "net.ceedubs"      %% "irrec-regex-gen" % irrecVersion % Test
     ),
     mimaBinaryIssueFilters ++= {
@@ -84,9 +96,9 @@ lazy val ml = project
   .settings(framelessTypedDatasetREPL: _*)
   .settings(publishSettings: _*)
   .settings(libraryDependencies ++= Seq(
-    "org.apache.spark" %% "spark-core"  % sparkVersion % Provided,
-    "org.apache.spark" %% "spark-sql"   % sparkVersion % Provided,
-    "org.apache.spark" %% "spark-mllib" % sparkVersion % Provided
+    "org.apache.spark" %% "spark-core"  % sparkVersion.value % Provided,
+    "org.apache.spark" %% "spark-sql"   % sparkVersion.value % Provided,
+    "org.apache.spark" %% "spark-mllib" % sparkVersion.value % Provided
   ))
   .dependsOn(
     core % "test->test;compile->compile",
@@ -100,9 +112,9 @@ lazy val docs = project
   .settings(scalacOptions --= Seq("-Xfatal-warnings", "-Ywarn-unused-import"))
   .enablePlugins(MdocPlugin)
   .settings(libraryDependencies ++= Seq(
-    "org.apache.spark" %% "spark-core"  % sparkVersion,
-    "org.apache.spark" %% "spark-sql"   % sparkVersion,
-    "org.apache.spark" %% "spark-mllib" % sparkVersion
+    "org.apache.spark" %% "spark-core"  % sparkVersion.value,
+    "org.apache.spark" %% "spark-sql"   % sparkVersion.value,
+    "org.apache.spark" %% "spark-mllib" % sparkVersion.value
   ))
   .settings(
     addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full),
@@ -124,15 +136,15 @@ lazy val framelessSettings = Seq(
     "-feature",
     "-unchecked",
     "-Xfatal-warnings",
-    "-Yno-adapted-args",
+    // "-Yno-adapted-args",
     "-Ywarn-dead-code",
     "-Ywarn-numeric-widen",
-    "-Ywarn-unused-import",
+    // "-Ywarn-unused-import",
     "-Ywarn-value-discard",
     "-language:existentials",
     "-language:implicitConversions",
     "-language:higherKinds",
-    "-Xfuture"
+    // "-Xfuture"
   ),
   licenses += ("Apache-2.0", url("http://opensource.org/licenses/Apache-2.0")),
   homepage := Some(url("https://typelevel.org/frameless")),
@@ -145,7 +157,11 @@ lazy val framelessSettings = Seq(
   Test / javaOptions ++= Seq("-Xmx1G", "-ea"),
   Test / fork := true,
   Test / parallelExecution := false,
-  mimaPreviousArtifacts := Set("org.typelevel" %% name.value % previousVersion)
+  mimaPreviousArtifacts := Set("org.typelevel" %% name.value % previousVersion),
+  resolvers ++= Seq(
+    Resolver.sonatypeRepo("snapshots"),
+    "apache-snapshots" at "https://repository.apache.org/content/repositories/snapshots/"
+  )
 ) ++ consoleSettings
 
 lazy val consoleSettings = Seq(
