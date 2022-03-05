@@ -1,426 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Laika 0.18.1 + Helium Theme" />
+    <title>Injection: Creating Custom Encoders</title>
+    
+      <meta name="author" content="Olivier Blanvillain"/>
+    
+      <meta name="author" content="Adelbert Chang"/>
+    
+      <meta name="author" content="Marios Iliofotou"/>
+    
+      <meta name="author" content="Gleb Kanterov"/>
+    
+      <meta name="author" content="Erik Osheim"/>
+    
+      <meta name="author" content="Jeremy Smith"/>
+    
+      <meta name="author" content="Cédric Chantepie"/>
+    
+      <meta name="author" content="Grigory Pomadchin"/>
+    
+    
+      <meta name="description" content="docs"/>
+    
+    
+      <link rel="icon" sizes="32x32" type="image/png" href="https://typelevel.org/img/favicon.png"/>
+    
+    
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.207/distr/fira_code.css">
+    
+    <link rel="stylesheet" type="text/css" href="helium/icofont.min.css" />
+    <link rel="stylesheet" type="text/css" href="helium/laika-helium.css" />
+    <link rel="stylesheet" type="text/css" href="site/styles.css" />
+    <script src="helium/laika-helium.js"></script>
+    
+    
+    <script> /* for avoiding page load transitions */ </script>
+  </head>
 
-<!DOCTYPE HTML>
-<html lang="" >
-    <head>
-        <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Injection: Creating Custom Encoders · GitBook</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.2">
-        
-        
-        
-    
-    <link rel="stylesheet" href="gitbook/style.css">
+  <body>
 
-    
-            
-                
-                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
-                
-            
-                
-                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
-                
-            
-                
-                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
-                
-            
-        
+    <header id="top-bar">
 
-    
-
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-        
-    
-    
-    <meta name="HandheldFriendly" content="true"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
-    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
-
-    
-    <link rel="next" href="Job.html" />
-    
-    
-    <link rel="prev" href="TypedEncoder.html" />
-    
-
-    </head>
-    <body>
-        
-<div class="book">
-    <div class="book-summary">
-        
-            
-<div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search" />
-</div>
-
-            
-                <nav role="navigation">
-                
-
-
-<ul class="summary">
-    
-    
-
-    
-
-    
-        
-        
-    
-        <li class="chapter " data-level="1.1" data-path="./">
-            
-                <a href="./">
-            
-                    
-                    Introduction
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2" data-path="FeatureOverview.html">
-            
-                <a href="FeatureOverview.html">
-            
-                    
-                    TypedDataset: Feature Overview
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3" data-path="TypedDatasetVsSparkDataset.html">
-            
-                <a href="TypedDatasetVsSparkDataset.html">
-            
-                    
-                    Comparing TypedDatasets with Spark's Datasets
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4" data-path="TypedEncoder.html">
-            
-                <a href="TypedEncoder.html">
-            
-                    
-                    Typed Encoders in Frameless
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter active" data-level="1.5" data-path="Injection.html">
-            
-                <a href="Injection.html">
-            
-                    
-                    Injection: Creating Custom Encoders
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.6" data-path="Job.html">
-            
-                <a href="Job.html">
-            
-                    
-                    Job[A]
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.7" data-path="Cats.html">
-            
-                <a href="Cats.html">
-            
-                    
-                    Using Cats with RDDs
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.8" data-path="TypedML.html">
-            
-                <a href="TypedML.html">
-            
-                    
-                    Using Spark ML with TypedDataset
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.9" data-path="TypedDataFrame.html">
-            
-                <a href="TypedDataFrame.html">
-            
-                    
-                    Proof of Concept: TypedDataFrame
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-    
-
-    <li class="divider"></li>
-
-    <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
+      <div class="row">
+        <a id="nav-icon">
+          <i class="icofont-laika" title="Navigation">&#xefa2;</i>
         </a>
-    </li>
-</ul>
-
-
-                </nav>
-            
         
-    </div>
+      </div>
+  
+      <a class="image-link" href="https://typelevel.org"><img src="https://typelevel.org/img/logo.svg"></a>
+      
+      <span class="row links"><a class="icon-link svg-link" href="https://github.com/pomadchin/frameless"><span title="Source Code"><svg class="svg-icon" width="100%" height="100%" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+  <g class="svg-shape">
+    <path d="M49.995,1c-27.609,-0 -49.995,22.386 -49.995,50.002c-0,22.09 14.325,40.83 34.194,47.444c2.501,0.458 3.413,-1.086 3.413,-2.412c0,-1.185 -0.043,-4.331 -0.067,-8.503c-13.908,3.021 -16.843,-6.704 -16.843,-6.704c-2.274,-5.773 -5.552,-7.311 -5.552,-7.311c-4.54,-3.103 0.344,-3.042 0.344,-3.042c5.018,0.356 7.658,5.154 7.658,5.154c4.46,7.64 11.704,5.433 14.552,4.156c0.454,-3.232 1.744,-5.436 3.174,-6.685c-11.102,-1.262 -22.775,-5.553 -22.775,-24.713c-0,-5.457 1.949,-9.92 5.147,-13.416c-0.516,-1.265 -2.231,-6.348 0.488,-13.233c0,0 4.199,-1.344 13.751,5.126c3.988,-1.108 8.266,-1.663 12.518,-1.682c4.245,0.019 8.523,0.574 12.517,1.682c9.546,-6.47 13.736,-5.126 13.736,-5.126c2.728,6.885 1.013,11.968 0.497,13.233c3.204,3.496 5.141,7.959 5.141,13.416c0,19.209 -11.691,23.436 -22.83,24.673c1.795,1.544 3.394,4.595 3.394,9.26c0,6.682 -0.061,12.076 -0.061,13.715c0,1.338 0.899,2.894 3.438,2.406c19.853,-6.627 34.166,-25.354 34.166,-47.438c-0,-27.616 -22.389,-50.002 -50.005,-50.002"/>
+  </g>
+</svg></span></a><a class="icon-link" href="https://discord.gg/XF3CXcMzqD"><i class="icofont-laika" title="Chat">&#xeed5;</i></a><a class="icon-link" href="https://twitter.com/typelevel"><i class="icofont-laika" title="Twitter">&#xed7a;</i></a></span>
+      
+    </header>
 
-    <div class="book-body">
+    <nav id="sidebar">
+
+      <div class="row">
+        <a class="icon-link svg-link" href="https://github.com/pomadchin/frameless"><span title="Source Code"><svg class="svg-icon" width="100%" height="100%" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+  <g class="svg-shape">
+    <path d="M49.995,1c-27.609,-0 -49.995,22.386 -49.995,50.002c-0,22.09 14.325,40.83 34.194,47.444c2.501,0.458 3.413,-1.086 3.413,-2.412c0,-1.185 -0.043,-4.331 -0.067,-8.503c-13.908,3.021 -16.843,-6.704 -16.843,-6.704c-2.274,-5.773 -5.552,-7.311 -5.552,-7.311c-4.54,-3.103 0.344,-3.042 0.344,-3.042c5.018,0.356 7.658,5.154 7.658,5.154c4.46,7.64 11.704,5.433 14.552,4.156c0.454,-3.232 1.744,-5.436 3.174,-6.685c-11.102,-1.262 -22.775,-5.553 -22.775,-24.713c-0,-5.457 1.949,-9.92 5.147,-13.416c-0.516,-1.265 -2.231,-6.348 0.488,-13.233c0,0 4.199,-1.344 13.751,5.126c3.988,-1.108 8.266,-1.663 12.518,-1.682c4.245,0.019 8.523,0.574 12.517,1.682c9.546,-6.47 13.736,-5.126 13.736,-5.126c2.728,6.885 1.013,11.968 0.497,13.233c3.204,3.496 5.141,7.959 5.141,13.416c0,19.209 -11.691,23.436 -22.83,24.673c1.795,1.544 3.394,4.595 3.394,9.26c0,6.682 -0.061,12.076 -0.061,13.715c0,1.338 0.899,2.894 3.438,2.406c19.853,-6.627 34.166,-25.354 34.166,-47.438c-0,-27.616 -22.389,-50.002 -50.005,-50.002"/>
+  </g>
+</svg></span></a><a class="icon-link" href="https://discord.gg/XF3CXcMzqD"><i class="icofont-laika" title="Chat">&#xeed5;</i></a><a class="icon-link" href="https://twitter.com/typelevel"><i class="icofont-laika" title="Twitter">&#xed7a;</i></a>
+      </div>
+      
+      <ul class="nav-list">
+        <li class="level1"><a href="FeatureOverview.html">TypedDataset: Feature Overview</a></li>
+        <li class="level1"><a href="TypedDatasetVsSparkDataset.html">Comparing TypedDatasets with Spark&#39;s Datasets</a></li>
+        <li class="level1"><a href="WorkingWithCsvParquetJson.html">Working with CSV and Parquet data</a></li>
+        <li class="level1 active"><a href="#">Injection: Creating Custom Encoders</a></li>
+        <li class="level1"><a href="Job.html">Job[A]</a></li>
+        <li class="level1"><a href="Cats.html">Using Cats with Frameless</a></li>
+        <li class="level1"><a href="TypedML.html">Typed Spark ML</a></li>
+        <li class="level1"><a href="TypedDataFrame.html">Proof of Concept: TypedDataFrame</a></li>
+        <li class="level1"><a href="TypedEncoder.html">Typed Encoders in Frameless</a></li>
+      </ul>
+      
+      <ul class="nav-list">
+        <li class="level1 nav-header">Related Projects</li>
         
-            <div class="body-inner">
-                
-                    
+          <li class="level2"><a href="https://typelevel.org/cats/">cats</a></li>
+        
+      </ul>
 
-<div class="book-header" role="navigation">
-    
+    </nav>
 
-    <!-- Title -->
-    <h1>
-        <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Injection: Creating Custom Encoders</a>
-    </h1>
-</div>
+    <div id="container">
 
+      <nav id="page-nav">
+        <p class="header"><a href="#">Injection: Creating Custom Encoders</a></p>
+        
+        <ul class="nav-list">
+          <li class="level1"><a href="#example">Example</a></li>
+          <li class="level1"><a href="#another-example">Another example</a></li>
+        </ul>
+        
+        <p class="footer"></p>
+      </nav>
 
+      <main class="content">
 
-
-                    <div class="page-wrapper" tabindex="-1" role="main">
-                        <div class="page-inner">
-                            
-<div id="book-search-results">
-    <div class="search-noresults">
-    
-                                <section class="normal markdown-section">
-                                
-                                <h1 id="injection-creating-custom-encoders">Injection: Creating Custom Encoders</h1>
-<p>Injection lets us define encoders for types that do not have one by injecting <code>A</code> into an encodable type <code>B</code>.
-This is the definition of the injection typeclass:</p>
-<pre><code class="lang-scala"><span class="hljs-class"><span class="hljs-keyword">trait</span> <span class="hljs-title">Injection</span>[<span class="hljs-type">A</span>, <span class="hljs-type">B</span>] <span class="hljs-keyword">extends</span> <span class="hljs-title">Serializable</span> </span>{
-  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">apply</span></span>(a: <span class="hljs-type">A</span>): <span class="hljs-type">B</span>
-  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">invert</span></span>(b: <span class="hljs-type">B</span>): <span class="hljs-type">A</span>
+        <h1 id="injection-creating-custom-encoders" class="title">Injection: Creating Custom Encoders</h1>
+        <p>Injection lets us define encoders for types that do not have one by injecting <code>A</code> into an encodable type <code>B</code>.
+        This is the definition of the injection typeclass:</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">trait</span><span> </span><span class="type-name">Injection</span><span>[</span><span class="type-name">A</span><span>, </span><span class="type-name">B</span><span>] </span><span class="keyword">extends</span><span> </span><span class="type-name">Serializable</span><span> {
+  </span><span class="keyword">def</span><span> </span><span class="declaration-name">apply</span><span>(</span><span class="identifier">a</span><span>: </span><span class="type-name">A</span><span>): </span><span class="type-name">B</span><span>
+  </span><span class="keyword">def</span><span> </span><span class="declaration-name">invert</span><span>(</span><span class="identifier">b</span><span>: </span><span class="type-name">B</span><span>): </span><span class="type-name">A</span><span>
+}</span></code></pre>
+        
+        <h2 id="example" class="section">Example<a class="anchor-link right" href="#example"><i class="icofont-laika">&#xef71;</i></a></h2>
+        <p>Let&#39;s define a simple case class:</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">case</span><span> </span><span class="keyword">class</span><span> </span><span class="type-name">Person</span><span>(</span><span class="identifier">age</span><span>: </span><span class="type-name">Int</span><span>, </span><span class="identifier">birthday</span><span>: </span><span class="identifier">java</span><span>.</span><span class="identifier">util</span><span>.</span><span class="type-name">Date</span><span>)
+</span><span class="keyword">val</span><span> </span><span class="identifier">people</span><span> = </span><span class="type-name">Seq</span><span>(</span><span class="type-name">Person</span><span>(</span><span class="number-literal">42</span><span>, </span><span class="keyword">new</span><span> </span><span class="identifier">java</span><span>.</span><span class="identifier">util</span><span>.</span><span class="type-name">Date</span><span>))
+</span><span class="comment">// people: Seq[Person] = List(Person(42, Sat Mar 05 20:44:06 UTC 2022))</span></code></pre>
+        <p>And an instance of a <code>TypedDataset</code>:</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">val</span><span> </span><span class="identifier">personDS</span><span> = </span><span class="type-name">TypedDataset</span><span>.</span><span class="identifier">create</span><span>(</span><span class="identifier">people</span><span>)
+</span><span class="comment">// error: could not find implicit value for parameter encoder: frameless.TypedEncoder[repl.MdocSession.App0.Person]
+// val personDS = TypedDataset.create(people)
+//                ^^^^^^^^^^^^^^^^^^^^^^^^^^^</span></code></pre>
+        <p>Looks like we can&#39;t, a <code>TypedEncoder</code> instance of <code>Person</code> is not available, or more precisely for <code>java.util.Date</code>.
+        But we can define a injection from <code>java.util.Date</code> to an encodable type, like <code>Long</code>:</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">import</span><span> </span><span class="identifier">frameless</span><span>.</span><span class="identifier">_</span><span>
+</span><span class="keyword">implicit</span><span> </span><span class="keyword">val</span><span> </span><span class="identifier">dateToLongInjection</span><span> = </span><span class="keyword">new</span><span> </span><span class="type-name">Injection</span><span>[</span><span class="identifier">java</span><span>.</span><span class="identifier">util</span><span>.</span><span class="type-name">Date</span><span>, </span><span class="type-name">Long</span><span>] {
+  </span><span class="keyword">def</span><span> </span><span class="declaration-name">apply</span><span>(</span><span class="identifier">d</span><span>: </span><span class="identifier">java</span><span>.</span><span class="identifier">util</span><span>.</span><span class="type-name">Date</span><span>): </span><span class="type-name">Long</span><span> = </span><span class="identifier">d</span><span>.</span><span class="identifier">getTime</span><span>()
+  </span><span class="keyword">def</span><span> </span><span class="declaration-name">invert</span><span>(</span><span class="identifier">l</span><span>: </span><span class="type-name">Long</span><span>): </span><span class="identifier">java</span><span>.</span><span class="identifier">util</span><span>.</span><span class="type-name">Date</span><span> = </span><span class="keyword">new</span><span> </span><span class="identifier">java</span><span>.</span><span class="identifier">util</span><span>.</span><span class="type-name">Date</span><span>(</span><span class="identifier">l</span><span>)
 }
-</code></pre>
-<h2 id="example">Example</h2>
-<p>Let&apos;s define a simple case class:</p>
-<pre><code class="lang-scala"><span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>(<span class="hljs-params">age: <span class="hljs-type">Int</span>, birthday: java.util.<span class="hljs-type">Date</span></span>)</span>
-<span class="hljs-comment">// defined class Person</span>
-
-<span class="hljs-keyword">val</span> people = <span class="hljs-type">Seq</span>(<span class="hljs-type">Person</span>(<span class="hljs-number">42</span>, <span class="hljs-keyword">new</span> java.util.<span class="hljs-type">Date</span>))
-<span class="hljs-comment">// people: Seq[Person] = List(Person(42,Tue Jan 19 20:29:11 PST 2021))</span>
-</code></pre>
-<p>And an instance of a <code>TypedDataset</code>:</p>
-<pre><code class="lang-scala"><span class="hljs-keyword">val</span> personDS = <span class="hljs-type">TypedDataset</span>.create(people)
-<span class="hljs-comment">// &lt;console&gt;:23: error: could not find implicit value for parameter encoder: frameless.TypedEncoder[Person]</span>
-<span class="hljs-comment">//        val personDS = TypedDataset.create(people)</span>
-<span class="hljs-comment">//                                          ^</span>
-</code></pre>
-<p>Looks like we can&apos;t, a <code>TypedEncoder</code> instance of <code>Person</code> is not available, or more precisely for <code>java.util.Date</code>.
-But we can define a injection from <code>java.util.Date</code> to an encodable type, like <code>Long</code>:</p>
-<pre><code class="lang-scala"><span class="hljs-keyword">import</span> frameless._
-<span class="hljs-comment">// import frameless._</span>
-
-<span class="hljs-keyword">implicit</span> <span class="hljs-keyword">val</span> dateToLongInjection = <span class="hljs-keyword">new</span> <span class="hljs-type">Injection</span>[java.util.<span class="hljs-type">Date</span>, <span class="hljs-type">Long</span>] {
-  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">apply</span></span>(d: java.util.<span class="hljs-type">Date</span>): <span class="hljs-type">Long</span> = d.getTime()
-  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">invert</span></span>(l: <span class="hljs-type">Long</span>): java.util.<span class="hljs-type">Date</span> = <span class="hljs-keyword">new</span> java.util.<span class="hljs-type">Date</span>(l)
-}
-<span class="hljs-comment">// dateToLongInjection: frameless.Injection[java.util.Date,Long] = $anon$1@17559031</span>
-</code></pre>
-<p>We can be less verbose using the <code>Injection.apply</code> function:</p>
-<pre><code class="lang-scala"><span class="hljs-keyword">import</span> frameless._
-<span class="hljs-comment">// import frameless._</span>
-
-<span class="hljs-keyword">implicit</span> <span class="hljs-keyword">val</span> dateToLongInjection = <span class="hljs-type">Injection</span>((_: java.util.<span class="hljs-type">Date</span>).getTime(), <span class="hljs-keyword">new</span> java.util.<span class="hljs-type">Date</span>((_: <span class="hljs-type">Long</span>)))
-<span class="hljs-comment">// dateToLongInjection: frameless.Injection[java.util.Date,Long] = frameless.Injection$$anon$1@7d716477</span>
-</code></pre>
-<p>Now we can create our <code>TypedDataset</code>:</p>
-<pre><code class="lang-scala"><span class="hljs-keyword">val</span> personDS = <span class="hljs-type">TypedDataset</span>.create(people)
-<span class="hljs-comment">// personDS: frameless.TypedDataset[Person] = [age: int, birthday: bigint]</span>
-</code></pre>
-<h2 id="another-example">Another example</h2>
-<p>Let&apos;s define a sealed family:</p>
-<pre><code class="lang-scala"><span class="hljs-keyword">sealed</span> <span class="hljs-class"><span class="hljs-keyword">trait</span> <span class="hljs-title">Gender</span></span>
-<span class="hljs-comment">// defined trait Gender</span>
-
-<span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Male</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Gender</span></span>
-<span class="hljs-comment">// defined object Male</span>
-
-<span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Female</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Gender</span></span>
-<span class="hljs-comment">// defined object Female</span>
-
-<span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Other</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Gender</span></span>
-<span class="hljs-comment">// defined object Other</span>
-</code></pre>
-<p>And a simple case class:</p>
-<pre><code class="lang-scala"><span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>(<span class="hljs-params">age: <span class="hljs-type">Int</span>, gender: <span class="hljs-type">Gender</span></span>)</span>
-<span class="hljs-comment">// defined class Person</span>
-
-<span class="hljs-keyword">val</span> people = <span class="hljs-type">Seq</span>(<span class="hljs-type">Person</span>(<span class="hljs-number">42</span>, <span class="hljs-type">Male</span>))
-<span class="hljs-comment">// people: Seq[Person] = List(Person(42,Male))</span>
-</code></pre>
-<p>Again if we try to create a <code>TypedDataset</code>, we get a compilation error.</p>
-<pre><code class="lang-scala"><span class="hljs-keyword">val</span> personDS = <span class="hljs-type">TypedDataset</span>.create(people)
-<span class="hljs-comment">// &lt;console&gt;:31: error: could not find implicit value for parameter encoder: frameless.TypedEncoder[Person]</span>
-<span class="hljs-comment">//        val personDS = TypedDataset.create(people)</span>
-<span class="hljs-comment">//                                          ^</span>
-</code></pre>
-<p>Let&apos;s define an injection instance for <code>Gender</code>:</p>
-<pre><code class="lang-scala"><span class="hljs-keyword">implicit</span> <span class="hljs-keyword">val</span> genderToInt: <span class="hljs-type">Injection</span>[<span class="hljs-type">Gender</span>, <span class="hljs-type">Int</span>] = <span class="hljs-type">Injection</span>(
+</span><span class="comment">// dateToLongInjection: AnyRef with Injection[java.util.Date, Long] = repl.MdocSession$App0$$anon$1@1060c237</span></code></pre>
+        <p>We can be less verbose using the <code>Injection.apply</code> function:</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">import</span><span> </span><span class="identifier">frameless</span><span>.</span><span class="identifier">_</span><span>
+</span><span class="keyword">implicit</span><span> </span><span class="keyword">val</span><span> </span><span class="identifier">dateToLongInjection</span><span> = </span><span class="type-name">Injection</span><span>((</span><span class="identifier">_</span><span>: </span><span class="identifier">java</span><span>.</span><span class="identifier">util</span><span>.</span><span class="type-name">Date</span><span>).</span><span class="identifier">getTime</span><span>(), </span><span class="keyword">new</span><span> </span><span class="identifier">java</span><span>.</span><span class="identifier">util</span><span>.</span><span class="type-name">Date</span><span>((</span><span class="identifier">_</span><span>: </span><span class="type-name">Long</span><span>)))
+</span><span class="comment">// dateToLongInjection: Injection[java.util.Date, Long] = frameless.Injection$$anon$1@9c415e2</span></code></pre>
+        <p>Now we can create our <code>TypedDataset</code>:</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">val</span><span> </span><span class="identifier">personDS</span><span> = </span><span class="type-name">TypedDataset</span><span>.</span><span class="identifier">create</span><span>(</span><span class="identifier">people</span><span>)
+</span><span class="comment">// personDS: TypedDataset[Person] = [age: int, birthday: bigint]</span></code></pre>
+        
+        <h2 id="another-example" class="section">Another example<a class="anchor-link right" href="#another-example"><i class="icofont-laika">&#xef71;</i></a></h2>
+        <p>Let&#39;s define a sealed family:</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">sealed</span><span> </span><span class="keyword">trait</span><span> </span><span class="type-name">Gender</span><span>
+</span><span class="keyword">case</span><span> </span><span class="keyword">object</span><span> </span><span class="type-name">Male</span><span> </span><span class="keyword">extends</span><span> </span><span class="type-name">Gender</span><span>
+</span><span class="keyword">case</span><span> </span><span class="keyword">object</span><span> </span><span class="type-name">Female</span><span> </span><span class="keyword">extends</span><span> </span><span class="type-name">Gender</span><span>
+</span><span class="keyword">case</span><span> </span><span class="keyword">object</span><span> </span><span class="type-name">Other</span><span> </span><span class="keyword">extends</span><span> </span><span class="type-name">Gender</span></code></pre>
+        <p>And a simple case class:</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">case</span><span> </span><span class="keyword">class</span><span> </span><span class="type-name">Person</span><span>(</span><span class="identifier">age</span><span>: </span><span class="type-name">Int</span><span>, </span><span class="identifier">gender</span><span>: </span><span class="type-name">Gender</span><span>)
+</span><span class="keyword">val</span><span> </span><span class="identifier">people</span><span> = </span><span class="type-name">Seq</span><span>(</span><span class="type-name">Person</span><span>(</span><span class="number-literal">42</span><span>, </span><span class="type-name">Male</span><span>))
+</span><span class="comment">// people: Seq[Person] = List(Person(42, Male))</span></code></pre>
+        <p>Again if we try to create a <code>TypedDataset</code>, we get a compilation error.</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">val</span><span> </span><span class="identifier">personDS</span><span> = </span><span class="type-name">TypedDataset</span><span>.</span><span class="identifier">create</span><span>(</span><span class="identifier">people</span><span>)
+</span><span class="comment">// error: could not find implicit value for parameter encoder: frameless.TypedEncoder[repl.MdocSession.App1.Person]
+// val personDS = TypedDataset.create(people)
+//                ^^^^^^^^^^^^^^^^^^^^^^^^^^^</span></code></pre>
+        <p>Let&#39;s define an injection instance for <code>Gender</code>:</p>
+        <pre><code class="nohighlight"><span class="keyword">import</span><span> </span><span class="identifier">frameless</span><span>.</span><span class="identifier">_</span><span>
+</span><span class="keyword">implicit</span><span> </span><span class="keyword">val</span><span> </span><span class="identifier">genderToInt</span><span>: </span><span class="type-name">Injection</span><span>[</span><span class="type-name">Gender</span><span>, </span><span class="type-name">Int</span><span>] = </span><span class="type-name">Injection</span><span>(
   {
-    <span class="hljs-keyword">case</span> <span class="hljs-type">Male</span>   =&gt; <span class="hljs-number">1</span>
-    <span class="hljs-keyword">case</span> <span class="hljs-type">Female</span> =&gt; <span class="hljs-number">2</span>
-    <span class="hljs-keyword">case</span> <span class="hljs-type">Other</span>  =&gt; <span class="hljs-number">3</span>
+    </span><span class="keyword">case</span><span> </span><span class="type-name">Male</span><span>   =&gt; </span><span class="number-literal">1</span><span>
+    </span><span class="keyword">case</span><span> </span><span class="type-name">Female</span><span> =&gt; </span><span class="number-literal">2</span><span>
+    </span><span class="keyword">case</span><span> </span><span class="type-name">Other</span><span>  =&gt; </span><span class="number-literal">3</span><span>
   },
   {
-    <span class="hljs-keyword">case</span> <span class="hljs-number">1</span> =&gt; <span class="hljs-type">Male</span>
-    <span class="hljs-keyword">case</span> <span class="hljs-number">2</span> =&gt; <span class="hljs-type">Female</span>
-    <span class="hljs-keyword">case</span> <span class="hljs-number">3</span> =&gt; <span class="hljs-type">Other</span>
+    </span><span class="keyword">case</span><span> </span><span class="number-literal">1</span><span> =&gt; </span><span class="type-name">Male</span><span>
+    </span><span class="keyword">case</span><span> </span><span class="number-literal">2</span><span> =&gt; </span><span class="type-name">Female</span><span>
+    </span><span class="keyword">case</span><span> </span><span class="number-literal">3</span><span> =&gt; </span><span class="type-name">Other</span><span>
   })
-<span class="hljs-comment">// &lt;console&gt;:35: warning: match may not be exhaustive.</span>
-<span class="hljs-comment">// It would fail on the following inputs: Female, Male, Other</span>
-<span class="hljs-comment">//          {</span>
-<span class="hljs-comment">//          ^</span>
-<span class="hljs-comment">// genderToInt: frameless.Injection[Gender,Int] = frameless.Injection$$anon$1@7c0fbe02</span>
-</code></pre>
-<p>And now we can create our <code>TypedDataset</code>:</p>
-<pre><code class="lang-scala"><span class="hljs-keyword">val</span> personDS = <span class="hljs-type">TypedDataset</span>.create(people)
-<span class="hljs-comment">// personDS: frameless.TypedDataset[Person] = [age: int, gender: int]</span>
-</code></pre>
+</span><span class="comment">// genderToInt: Injection[Gender, Int] = frameless.Injection$$anon$1@4330cf12</span></code></pre>
+        <p>And now we can create our <code>TypedDataset</code>:</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">val</span><span> </span><span class="identifier">personDS</span><span> = </span><span class="type-name">TypedDataset</span><span>.</span><span class="identifier">create</span><span>(</span><span class="identifier">people</span><span>)
+</span><span class="comment">// personDS: TypedDataset[Person] = [age: int, gender: int]</span></code></pre>
+        <p>Alternatively, an injection instance can be derived for sealed families such as <code>Gender</code> using the following 
+        import, <code>import frameless.TypedEncoder.injections._</code>. This will encode the data constructors as strings.</p>
+        <p><strong>Known issue</strong>: An invalid injection instance will be derived if there are data constructors with the same name.
+        For example, consider the following sealed family:</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">sealed</span><span> </span><span class="keyword">trait</span><span> </span><span class="type-name">Foo</span><span>
+</span><span class="keyword">object</span><span> </span><span class="type-name">A</span><span> { </span><span class="keyword">case</span><span> </span><span class="keyword">object</span><span> </span><span class="type-name">Bar</span><span> </span><span class="keyword">extends</span><span> </span><span class="type-name">Foo</span><span> }
+</span><span class="keyword">object</span><span> </span><span class="type-name">B</span><span> { </span><span class="keyword">case</span><span> </span><span class="keyword">object</span><span> </span><span class="type-name">Bar</span><span> </span><span class="keyword">extends</span><span> </span><span class="type-name">Foo</span><span> }</span></code></pre>
+        <p><code>A.Bar</code> and <code>B.Bar</code> will both be encoded as <code>&quot;Bar&quot;</code> thereby breaking the law that <code>invert(apply(x)) == x</code>.</p>
 
-                                
-                                </section>
-                            
-    </div>
-    <div class="search-results">
-        <div class="has-results">
-            
-            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
-            <ul class="search-results-list"></ul>
-            
-        </div>
-        <div class="no-results">
-            
-            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
-            
-        </div>
-    </div>
-</div>
+        <hr style="margin-top: 30px"/>
+        <footer style="font-size: 90%; text-align: center">
+          frameless is a <a href="https://typelevel.org/">Typelevel</a> project distributed under the <a href="http://opensource.org/licenses/Apache-2.0">Apache-2.0</a> license.
+        </footer>
 
-                        </div>
-                    </div>
-                
-            </div>
+      </main>
 
-            
-                
-                <a href="TypedEncoder.html" class="navigation navigation-prev " aria-label="Previous page: Typed Encoders in Frameless">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                
-                
-                <a href="Job.html" class="navigation navigation-next " aria-label="Next page: Job[A]">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                
-            
-        
     </div>
 
-    <script>
-        var gitbook = gitbook || [];
-        gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Injection: Creating Custom Encoders","level":"1.5","depth":1,"next":{"title":"Job[A]","level":"1.6","depth":1,"path":"Job.md","ref":"Job.md","articles":[]},"previous":{"title":"Typed Encoders in Frameless","level":"1.4","depth":1,"path":"TypedEncoder.md","ref":"TypedEncoder.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Injection.md","mtime":"2021-01-20T04:29:12.460Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2021-01-20T04:29:45.388Z"},"basePath":".","book":{"language":""}});
-        });
-    </script>
-</div>
-
-        
-    <script src="gitbook/gitbook.js"></script>
-    <script src="gitbook/theme.js"></script>
-    
-        
-        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
-        
-    
-        
-        <script src="gitbook/gitbook-plugin-search/search.js"></script>
-        
-    
-        
-        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
-        
-    
-        
-        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
-        
-    
-
-    </body>
+  </body>
 </html>
-

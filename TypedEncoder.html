@@ -1,404 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Laika 0.18.1 + Helium Theme" />
+    <title>Typed Encoders in Frameless</title>
+    
+      <meta name="author" content="Olivier Blanvillain"/>
+    
+      <meta name="author" content="Adelbert Chang"/>
+    
+      <meta name="author" content="Marios Iliofotou"/>
+    
+      <meta name="author" content="Gleb Kanterov"/>
+    
+      <meta name="author" content="Erik Osheim"/>
+    
+      <meta name="author" content="Jeremy Smith"/>
+    
+      <meta name="author" content="Cédric Chantepie"/>
+    
+      <meta name="author" content="Grigory Pomadchin"/>
+    
+    
+      <meta name="description" content="docs"/>
+    
+    
+      <link rel="icon" sizes="32x32" type="image/png" href="https://typelevel.org/img/favicon.png"/>
+    
+    
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.207/distr/fira_code.css">
+    
+    <link rel="stylesheet" type="text/css" href="helium/icofont.min.css" />
+    <link rel="stylesheet" type="text/css" href="helium/laika-helium.css" />
+    <link rel="stylesheet" type="text/css" href="site/styles.css" />
+    <script src="helium/laika-helium.js"></script>
+    
+    
+    <script> /* for avoiding page load transitions */ </script>
+  </head>
 
-<!DOCTYPE HTML>
-<html lang="" >
-    <head>
-        <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Typed Encoders in Frameless · GitBook</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.2">
-        
-        
-        
-    
-    <link rel="stylesheet" href="gitbook/style.css">
+  <body>
 
-    
-            
-                
-                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
-                
-            
-                
-                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
-                
-            
-                
-                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
-                
-            
-        
+    <header id="top-bar">
 
-    
-
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-        
-    
-    
-    <meta name="HandheldFriendly" content="true"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
-    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
-
-    
-    <link rel="next" href="Injection.html" />
-    
-    
-    <link rel="prev" href="TypedDatasetVsSparkDataset.html" />
-    
-
-    </head>
-    <body>
-        
-<div class="book">
-    <div class="book-summary">
-        
-            
-<div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search" />
-</div>
-
-            
-                <nav role="navigation">
-                
-
-
-<ul class="summary">
-    
-    
-
-    
-
-    
-        
-        
-    
-        <li class="chapter " data-level="1.1" data-path="./">
-            
-                <a href="./">
-            
-                    
-                    Introduction
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2" data-path="FeatureOverview.html">
-            
-                <a href="FeatureOverview.html">
-            
-                    
-                    TypedDataset: Feature Overview
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3" data-path="TypedDatasetVsSparkDataset.html">
-            
-                <a href="TypedDatasetVsSparkDataset.html">
-            
-                    
-                    Comparing TypedDatasets with Spark's Datasets
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter active" data-level="1.4" data-path="TypedEncoder.html">
-            
-                <a href="TypedEncoder.html">
-            
-                    
-                    Typed Encoders in Frameless
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5" data-path="Injection.html">
-            
-                <a href="Injection.html">
-            
-                    
-                    Injection: Creating Custom Encoders
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.6" data-path="Job.html">
-            
-                <a href="Job.html">
-            
-                    
-                    Job[A]
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.7" data-path="Cats.html">
-            
-                <a href="Cats.html">
-            
-                    
-                    Using Cats with RDDs
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.8" data-path="TypedML.html">
-            
-                <a href="TypedML.html">
-            
-                    
-                    Using Spark ML with TypedDataset
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.9" data-path="TypedDataFrame.html">
-            
-                <a href="TypedDataFrame.html">
-            
-                    
-                    Proof of Concept: TypedDataFrame
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-    
-
-    <li class="divider"></li>
-
-    <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
+      <div class="row">
+        <a id="nav-icon">
+          <i class="icofont-laika" title="Navigation">&#xefa2;</i>
         </a>
-    </li>
-</ul>
-
-
-                </nav>
-            
         
+      </div>
+  
+      <a class="image-link" href="https://typelevel.org"><img src="https://typelevel.org/img/logo.svg"></a>
+      
+      <span class="row links"><a class="icon-link svg-link" href="https://github.com/pomadchin/frameless"><span title="Source Code"><svg class="svg-icon" width="100%" height="100%" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+  <g class="svg-shape">
+    <path d="M49.995,1c-27.609,-0 -49.995,22.386 -49.995,50.002c-0,22.09 14.325,40.83 34.194,47.444c2.501,0.458 3.413,-1.086 3.413,-2.412c0,-1.185 -0.043,-4.331 -0.067,-8.503c-13.908,3.021 -16.843,-6.704 -16.843,-6.704c-2.274,-5.773 -5.552,-7.311 -5.552,-7.311c-4.54,-3.103 0.344,-3.042 0.344,-3.042c5.018,0.356 7.658,5.154 7.658,5.154c4.46,7.64 11.704,5.433 14.552,4.156c0.454,-3.232 1.744,-5.436 3.174,-6.685c-11.102,-1.262 -22.775,-5.553 -22.775,-24.713c-0,-5.457 1.949,-9.92 5.147,-13.416c-0.516,-1.265 -2.231,-6.348 0.488,-13.233c0,0 4.199,-1.344 13.751,5.126c3.988,-1.108 8.266,-1.663 12.518,-1.682c4.245,0.019 8.523,0.574 12.517,1.682c9.546,-6.47 13.736,-5.126 13.736,-5.126c2.728,6.885 1.013,11.968 0.497,13.233c3.204,3.496 5.141,7.959 5.141,13.416c0,19.209 -11.691,23.436 -22.83,24.673c1.795,1.544 3.394,4.595 3.394,9.26c0,6.682 -0.061,12.076 -0.061,13.715c0,1.338 0.899,2.894 3.438,2.406c19.853,-6.627 34.166,-25.354 34.166,-47.438c-0,-27.616 -22.389,-50.002 -50.005,-50.002"/>
+  </g>
+</svg></span></a><a class="icon-link" href="https://discord.gg/XF3CXcMzqD"><i class="icofont-laika" title="Chat">&#xeed5;</i></a><a class="icon-link" href="https://twitter.com/typelevel"><i class="icofont-laika" title="Twitter">&#xed7a;</i></a></span>
+      
+    </header>
+
+    <nav id="sidebar">
+
+      <div class="row">
+        <a class="icon-link svg-link" href="https://github.com/pomadchin/frameless"><span title="Source Code"><svg class="svg-icon" width="100%" height="100%" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+  <g class="svg-shape">
+    <path d="M49.995,1c-27.609,-0 -49.995,22.386 -49.995,50.002c-0,22.09 14.325,40.83 34.194,47.444c2.501,0.458 3.413,-1.086 3.413,-2.412c0,-1.185 -0.043,-4.331 -0.067,-8.503c-13.908,3.021 -16.843,-6.704 -16.843,-6.704c-2.274,-5.773 -5.552,-7.311 -5.552,-7.311c-4.54,-3.103 0.344,-3.042 0.344,-3.042c5.018,0.356 7.658,5.154 7.658,5.154c4.46,7.64 11.704,5.433 14.552,4.156c0.454,-3.232 1.744,-5.436 3.174,-6.685c-11.102,-1.262 -22.775,-5.553 -22.775,-24.713c-0,-5.457 1.949,-9.92 5.147,-13.416c-0.516,-1.265 -2.231,-6.348 0.488,-13.233c0,0 4.199,-1.344 13.751,5.126c3.988,-1.108 8.266,-1.663 12.518,-1.682c4.245,0.019 8.523,0.574 12.517,1.682c9.546,-6.47 13.736,-5.126 13.736,-5.126c2.728,6.885 1.013,11.968 0.497,13.233c3.204,3.496 5.141,7.959 5.141,13.416c0,19.209 -11.691,23.436 -22.83,24.673c1.795,1.544 3.394,4.595 3.394,9.26c0,6.682 -0.061,12.076 -0.061,13.715c0,1.338 0.899,2.894 3.438,2.406c19.853,-6.627 34.166,-25.354 34.166,-47.438c-0,-27.616 -22.389,-50.002 -50.005,-50.002"/>
+  </g>
+</svg></span></a><a class="icon-link" href="https://discord.gg/XF3CXcMzqD"><i class="icofont-laika" title="Chat">&#xeed5;</i></a><a class="icon-link" href="https://twitter.com/typelevel"><i class="icofont-laika" title="Twitter">&#xed7a;</i></a>
+      </div>
+      
+      <ul class="nav-list">
+        <li class="level1"><a href="FeatureOverview.html">TypedDataset: Feature Overview</a></li>
+        <li class="level1"><a href="TypedDatasetVsSparkDataset.html">Comparing TypedDatasets with Spark&#39;s Datasets</a></li>
+        <li class="level1"><a href="WorkingWithCsvParquetJson.html">Working with CSV and Parquet data</a></li>
+        <li class="level1"><a href="Injection.html">Injection: Creating Custom Encoders</a></li>
+        <li class="level1"><a href="Job.html">Job[A]</a></li>
+        <li class="level1"><a href="Cats.html">Using Cats with Frameless</a></li>
+        <li class="level1"><a href="TypedML.html">Typed Spark ML</a></li>
+        <li class="level1"><a href="TypedDataFrame.html">Proof of Concept: TypedDataFrame</a></li>
+        <li class="level1 active"><a href="#">Typed Encoders in Frameless</a></li>
+      </ul>
+      
+      <ul class="nav-list">
+        <li class="level1 nav-header">Related Projects</li>
+        
+          <li class="level2"><a href="https://typelevel.org/cats/">cats</a></li>
+        
+      </ul>
+
+    </nav>
+
+    <div id="container">
+
+      <nav id="page-nav">
+        <p class="header"><a href="#">Typed Encoders in Frameless</a></p>
+        
+        <ul class="nav-list">
+        </ul>
+        
+        <p class="footer"></p>
+      </nav>
+
+      <main class="content">
+
+        <h1 id="typed-encoders-in-frameless" class="title">Typed Encoders in Frameless</h1>
+        <p>Spark uses Reflection to derive its <code>Encoder</code>s, which is why they can fail at run time. For example, because Spark does not support <code>java.util.Date</code>, the following leads to an error:</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">import</span><span> </span><span class="identifier">org</span><span>.</span><span class="identifier">apache</span><span>.</span><span class="identifier">spark</span><span>.</span><span class="identifier">sql</span><span>.</span><span class="type-name">Dataset</span><span>
+</span><span class="keyword">import</span><span> </span><span class="identifier">spark</span><span>.</span><span class="identifier">implicits</span><span>.</span><span class="identifier">_</span><span>
+
+</span><span class="keyword">case</span><span> </span><span class="keyword">class</span><span> </span><span class="type-name">DateRange</span><span>(</span><span class="identifier">s</span><span>: </span><span class="identifier">java</span><span>.</span><span class="identifier">util</span><span>.</span><span class="type-name">Date</span><span>, </span><span class="identifier">e</span><span>: </span><span class="identifier">java</span><span>.</span><span class="identifier">util</span><span>.</span><span class="type-name">Date</span><span>)</span></code></pre>
+        <pre><code class="nohighlight"><span class="keyword">val</span><span> </span><span class="identifier">ds</span><span>: </span><span class="type-name">Dataset</span><span>[</span><span class="type-name">DateRange</span><span>] = </span><span class="type-name">Seq</span><span>(</span><span class="type-name">DateRange</span><span>(</span><span class="keyword">new</span><span> </span><span class="identifier">java</span><span>.</span><span class="identifier">util</span><span>.</span><span class="type-name">Date</span><span>, </span><span class="keyword">new</span><span> </span><span class="identifier">java</span><span>.</span><span class="identifier">util</span><span>.</span><span class="type-name">Date</span><span>)).</span><span class="identifier">toDS</span><span>()
+</span><span class="comment">// java.lang.UnsupportedOperationException: No Encoder found for java.util.Date
+// - field (class: &quot;java.util.Date&quot;, name: &quot;s&quot;)
+// - root class: &quot;repl.MdocSession.App0.DateRange&quot;
+// 	at org.apache.spark.sql.errors.QueryExecutionErrors$.cannotFindEncoderForTypeError(QueryExecutionErrors.scala:1000)
+// 	at org.apache.spark.sql.catalyst.ScalaReflection$.$anonfun$serializerFor$1(ScalaReflection.scala:617)
+// 	at scala.reflect.internal.tpe.TypeConstraints$UndoLog.undo(TypeConstraints.scala:73)
+// 	at org.apache.spark.sql.catalyst.ScalaReflection.cleanUpReflectionObjects(ScalaReflection.scala:947)
+// 	at org.apache.spark.sql.catalyst.ScalaReflection.cleanUpReflectionObjects$(ScalaReflection.scala:946)
+// 	at org.apache.spark.sql.catalyst.ScalaReflection$.cleanUpReflectionObjects(ScalaReflection.scala:51)
+// 	at org.apache.spark.sql.catalyst.ScalaReflection$.serializerFor(ScalaReflection.scala:448)
+// 	at org.apache.spark.sql.catalyst.ScalaReflection$.$anonfun$serializerFor$6(ScalaReflection.scala:604)
+// 	at scala.collection.immutable.List.map(List.scala:293)
+// 	at org.apache.spark.sql.catalyst.ScalaReflection$.$anonfun$serializerFor$1(ScalaReflection.scala:589)
+// 	at scala.reflect.internal.tpe.TypeConstraints$UndoLog.undo(TypeConstraints.scala:73)
+// 	at org.apache.spark.sql.catalyst.ScalaReflection.cleanUpReflectionObjects(ScalaReflection.scala:947)
+// 	at org.apache.spark.sql.catalyst.ScalaReflection.cleanUpReflectionObjects$(ScalaReflection.scala:946)
+// 	at org.apache.spark.sql.catalyst.ScalaReflection$.cleanUpReflectionObjects(ScalaReflection.scala:51)
+// 	at org.apache.spark.sql.catalyst.ScalaReflection$.serializerFor(ScalaReflection.scala:448)
+// 	at org.apache.spark.sql.catalyst.ScalaReflection$.$anonfun$serializerForType$1(ScalaReflection.scala:437)
+// 	at scala.reflect.internal.tpe.TypeConstraints$UndoLog.undo(TypeConstraints.scala:73)
+// 	at org.apache.spark.sql.catalyst.ScalaReflection.cleanUpReflectionObjects(ScalaReflection.scala:947)
+// 	at org.apache.spark.sql.catalyst.ScalaReflection.cleanUpReflectionObjects$(ScalaReflection.scala:946)
+// 	at org.apache.spark.sql.catalyst.ScalaReflection$.cleanUpReflectionObjects(ScalaReflection.scala:51)
+// 	at org.apache.spark.sql.catalyst.ScalaReflection$.serializerForType(ScalaReflection.scala:429)
+// 	at org.apache.spark.sql.catalyst.encoders.ExpressionEncoder$.apply(ExpressionEncoder.scala:55)
+// 	at org.apache.spark.sql.Encoders$.product(Encoders.scala:300)
+// 	at org.apache.spark.sql.LowPrioritySQLImplicits.newProductEncoder(SQLImplicits.scala:261)
+// 	at org.apache.spark.sql.LowPrioritySQLImplicits.newProductEncoder$(SQLImplicits.scala:261)
+// 	at org.apache.spark.sql.SQLImplicits.newProductEncoder(SQLImplicits.scala:32)
+// 	at repl.MdocSession$App0$$anonfun$4.apply$mcV$sp(TypedEncoder.md:45)
+// 	at repl.MdocSession$App0$$anonfun$4.apply(TypedEncoder.md:44)
+// 	at repl.MdocSession$App0$$anonfun$4.apply(TypedEncoder.md:44)</span></code></pre>
+        <p>As shown by the stack trace, this runtime error goes through <a href="https://github.com/apache/spark/blob/19cf208063f035d793d2306295a251a9af7e32f6/sql/catalyst/src/main/scala/org/apache/spark/sql/catalyst/ScalaReflection.scala">ScalaReflection</a> to try to derive an <code>Encoder</code> for <code>Dataset</code> schema. Beside the annoyance of not detecting this error at compile time, a more important limitation of the reflection-based approach is its inability to be extended for custom types. See this Stack Overflow question for a summary of the current situation (as of 2.0) in vanilla Spark: <a href="http://stackoverflow.com/a/39442829/2311362">How to store custom objects in a Dataset?</a>.</p>
+        <p>Frameless introduces a new type class called <code>TypeEncoder</code> to solve these issues. <code>TypeEncoder</code>s are passed around as implicit parameters to every Frameless method to ensure that the data being manipulated is <code>Encoder</code>. It uses a standard implicit resolution coupled with shapeless&#39; type class derivation mechanism to ensure every that compiling code manipulates encodable data. For example, the <code>java.util.Date</code> example won&#39;t compile with Frameless:</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">import</span><span> </span><span class="identifier">frameless</span><span>.</span><span class="type-name">TypedDataset</span><span>
+</span><span class="keyword">import</span><span> </span><span class="identifier">frameless</span><span>.</span><span class="identifier">syntax</span><span>.</span><span class="identifier">_</span></code></pre>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">val</span><span> </span><span class="identifier">ds</span><span>: </span><span class="type-name">TypedDataset</span><span>[</span><span class="type-name">DateRange</span><span>] = </span><span class="type-name">TypedDataset</span><span>.</span><span class="identifier">create</span><span>(</span><span class="type-name">Seq</span><span>(</span><span class="type-name">DateRange</span><span>(</span><span class="keyword">new</span><span> </span><span class="identifier">java</span><span>.</span><span class="identifier">util</span><span>.</span><span class="type-name">Date</span><span>, </span><span class="keyword">new</span><span> </span><span class="identifier">java</span><span>.</span><span class="identifier">util</span><span>.</span><span class="type-name">Date</span><span>)))
+</span><span class="comment">// error: ds is already defined as value ds
+// val ds: TypedDataset[DateRange] = TypedDataset.create(Seq(DateRange(new java.util.Date, new java.util.Date)))
+//     ^^
+// error: could not find implicit value for parameter encoder: frameless.TypedEncoder[repl.MdocSession.App0.DateRange]
+// val ds: TypedDataset[DateRange] = TypedDataset.create(Seq(DateRange(new java.util.Date, new java.util.Date)))
+//                                                      ^</span></code></pre>
+        <p>Type class derivation takes care of recursively constructing (and proving the existence of) <code>TypeEncoder</code>s for case classes. The following works as expected:</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">case</span><span> </span><span class="keyword">class</span><span> </span><span class="type-name">Bar</span><span>(</span><span class="identifier">d</span><span>: </span><span class="type-name">Double</span><span>, </span><span class="identifier">s</span><span>: </span><span class="type-name">String</span><span>)
+</span><span class="keyword">case</span><span> </span><span class="keyword">class</span><span> </span><span class="type-name">Foo</span><span>(</span><span class="identifier">i</span><span>: </span><span class="type-name">Int</span><span>, </span><span class="identifier">b</span><span>: </span><span class="type-name">Bar</span><span>)
+</span><span class="keyword">val</span><span> </span><span class="identifier">ds</span><span>: </span><span class="type-name">TypedDataset</span><span>[</span><span class="type-name">Foo</span><span>] = </span><span class="type-name">TypedDataset</span><span>.</span><span class="identifier">create</span><span>(</span><span class="type-name">Seq</span><span>(</span><span class="type-name">Foo</span><span>(</span><span class="number-literal">1</span><span>, </span><span class="type-name">Bar</span><span>(</span><span class="number-literal">1.1</span><span>, </span><span class="string-literal">&quot;s&quot;</span><span>))))
+</span><span class="comment">// ds: TypedDataset[Foo] = [i: int, b: struct&lt;d: double, s: string&gt;]
+</span><span class="identifier">ds</span><span>.</span><span class="identifier">collect</span><span>()
+</span><span class="comment">// res3: frameless.Job[Seq[Foo]] = frameless.Job$$anon$4@4dc72e33</span></code></pre>
+        <p>But any non-encodable in the case class hierarchy will be detected at compile time:</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">case</span><span> </span><span class="keyword">class</span><span> </span><span class="type-name">BarDate</span><span>(</span><span class="identifier">d</span><span>: </span><span class="type-name">Double</span><span>, </span><span class="identifier">s</span><span>: </span><span class="type-name">String</span><span>, </span><span class="identifier">t</span><span>: </span><span class="identifier">java</span><span>.</span><span class="identifier">util</span><span>.</span><span class="type-name">Date</span><span>)
+</span><span class="keyword">case</span><span> </span><span class="keyword">class</span><span> </span><span class="type-name">FooDate</span><span>(</span><span class="identifier">i</span><span>: </span><span class="type-name">Int</span><span>, </span><span class="identifier">b</span><span>: </span><span class="type-name">BarDate</span><span>)</span></code></pre>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">val</span><span> </span><span class="identifier">ds</span><span>: </span><span class="type-name">TypedDataset</span><span>[</span><span class="type-name">FooDate</span><span>] = </span><span class="type-name">TypedDataset</span><span>.</span><span class="identifier">create</span><span>(</span><span class="type-name">Seq</span><span>(</span><span class="type-name">FooDate</span><span>(</span><span class="number-literal">1</span><span>, </span><span class="type-name">BarDate</span><span>(</span><span class="number-literal">1.1</span><span>, </span><span class="string-literal">&quot;s&quot;</span><span>, </span><span class="keyword">new</span><span> </span><span class="identifier">java</span><span>.</span><span class="identifier">util</span><span>.</span><span class="type-name">Date</span><span>))))
+</span><span class="comment">// error: ds is already defined as value ds
+// val ds: TypedDataset[Foo] = TypedDataset.create(Seq(Foo(1, Bar(1.1, &quot;s&quot;))))
+//     ^^
+// error: ds is already defined as value ds
+// val ds: TypedDataset[FooDate] = TypedDataset.create(Seq(FooDate(1, BarDate(1.1, &quot;s&quot;, new java.util.Date))))
+//     ^^
+// error: could not find implicit value for parameter encoder: frameless.TypedEncoder[repl.MdocSession.App0.FooDate]
+// val ds: TypedDataset[FooDate] = TypedDataset.create(Seq(FooDate(1, BarDate(1.1, &quot;s&quot;, new java.util.Date))))
+//                                                    ^</span></code></pre>
+        <p>It should be noted that once derived, reflection-based <code>Encoder</code>s and implicitly derived <code>TypeEncoder</code>s have identical performance. The derivation mechanism is different, but the objects generated to encode and decode JVM objects in Spark&#39;s internal representation behave the same at runtime.</p>
+
+        <hr style="margin-top: 30px"/>
+        <footer style="font-size: 90%; text-align: center">
+          frameless is a <a href="https://typelevel.org/">Typelevel</a> project distributed under the <a href="http://opensource.org/licenses/Apache-2.0">Apache-2.0</a> license.
+        </footer>
+
+      </main>
+
     </div>
 
-    <div class="book-body">
-        
-            <div class="body-inner">
-                
-                    
-
-<div class="book-header" role="navigation">
-    
-
-    <!-- Title -->
-    <h1>
-        <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Typed Encoders in Frameless</a>
-    </h1>
-</div>
-
-
-
-
-                    <div class="page-wrapper" tabindex="-1" role="main">
-                        <div class="page-inner">
-                            
-<div id="book-search-results">
-    <div class="search-noresults">
-    
-                                <section class="normal markdown-section">
-                                
-                                <h1 id="typed-encoders-in-frameless">Typed Encoders in Frameless</h1>
-<p>Spark uses Reflection to derive its <code>Encoder</code>s, which is why they can fail at run time. For example, because Spark does not support <code>java.util.Date</code>, the following leads to an error:</p>
-<pre><code class="lang-scala"><span class="hljs-keyword">import</span> org.apache.spark.sql.<span class="hljs-type">Dataset</span>
-<span class="hljs-keyword">import</span> spark.implicits._
-
-<span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DateRange</span>(<span class="hljs-params">s: java.util.<span class="hljs-type">Date</span>, e: java.util.<span class="hljs-type">Date</span></span>)</span>
-</code></pre>
-<pre><code class="lang-scala">scala&gt; <span class="hljs-keyword">val</span> ds: <span class="hljs-type">Dataset</span>[<span class="hljs-type">DateRange</span>] = <span class="hljs-type">Seq</span>(<span class="hljs-type">DateRange</span>(<span class="hljs-keyword">new</span> java.util.<span class="hljs-type">Date</span>, <span class="hljs-keyword">new</span> java.util.<span class="hljs-type">Date</span>)).toDS()
-java.lang.<span class="hljs-type">UnsupportedOperationException</span>: <span class="hljs-type">No</span> <span class="hljs-type">Encoder</span> found <span class="hljs-keyword">for</span> java.util.<span class="hljs-type">Date</span>
-- field (<span class="hljs-class"><span class="hljs-keyword">class</span></span>: <span class="hljs-string">&quot;java.util.Date&quot;</span>, name: <span class="hljs-string">&quot;s&quot;</span>)
-- root <span class="hljs-class"><span class="hljs-keyword">class</span></span>: <span class="hljs-string">&quot;DateRange&quot;</span>
-  at org.apache.spark.sql.catalyst.<span class="hljs-type">ScalaReflection</span>$.$anonfun$serializerFor$<span class="hljs-number">1</span>(<span class="hljs-type">ScalaReflection</span>.scala:<span class="hljs-number">591</span>)
-  at scala.reflect.internal.tpe.<span class="hljs-type">TypeConstraints</span>$<span class="hljs-type">UndoLog</span>.undo(<span class="hljs-type">TypeConstraints</span>.scala:<span class="hljs-number">73</span>)
-  at org.apache.spark.sql.catalyst.<span class="hljs-type">ScalaReflection</span>.cleanUpReflectionObjects(<span class="hljs-type">ScalaReflection</span>.scala:<span class="hljs-number">904</span>)
-  at org.apache.spark.sql.catalyst.<span class="hljs-type">ScalaReflection</span>.cleanUpReflectionObjects$(<span class="hljs-type">ScalaReflection</span>.scala:<span class="hljs-number">903</span>)
-  at org.apache.spark.sql.catalyst.<span class="hljs-type">ScalaReflection</span>$.cleanUpReflectionObjects(<span class="hljs-type">ScalaReflection</span>.scala:<span class="hljs-number">49</span>)
-  at org.apache.spark.sql.catalyst.<span class="hljs-type">ScalaReflection</span>$.serializerFor(<span class="hljs-type">ScalaReflection</span>.scala:<span class="hljs-number">432</span>)
-  at org.apache.spark.sql.catalyst.<span class="hljs-type">ScalaReflection</span>$.$anonfun$serializerFor$<span class="hljs-number">6</span>(<span class="hljs-type">ScalaReflection</span>.scala:<span class="hljs-number">577</span>)
-  at scala.collection.immutable.<span class="hljs-type">List</span>.map(<span class="hljs-type">List</span>.scala:<span class="hljs-number">293</span>)
-  at org.apache.spark.sql.catalyst.<span class="hljs-type">ScalaReflection</span>$.$anonfun$serializerFor$<span class="hljs-number">1</span>(<span class="hljs-type">ScalaReflection</span>.scala:<span class="hljs-number">562</span>)
-  at scala.reflect.internal.tpe.<span class="hljs-type">TypeConstraints</span>$<span class="hljs-type">UndoLog</span>.undo(<span class="hljs-type">TypeConstraints</span>.scala:<span class="hljs-number">73</span>)
-  at org.apache.spark.sql.catalyst.<span class="hljs-type">ScalaReflection</span>.cleanUpReflectionObjects(<span class="hljs-type">ScalaReflection</span>.scala:<span class="hljs-number">904</span>)
-  at org.apache.spark.sql.catalyst.<span class="hljs-type">ScalaReflection</span>.cleanUpReflectionObjects$(<span class="hljs-type">ScalaReflection</span>.scala:<span class="hljs-number">903</span>)
-  at org.apache.spark.sql.catalyst.<span class="hljs-type">ScalaReflection</span>$.cleanUpReflectionObjects(<span class="hljs-type">ScalaReflection</span>.scala:<span class="hljs-number">49</span>)
-  at org.apache.spark.sql.catalyst.<span class="hljs-type">ScalaReflection</span>$.serializerFor(<span class="hljs-type">ScalaReflection</span>.scala:<span class="hljs-number">432</span>)
-  at org.apache.spark.sql.catalyst.<span class="hljs-type">ScalaReflection</span>$.$anonfun$serializerForType$<span class="hljs-number">1</span>(<span class="hljs-type">ScalaReflection</span>.scala:<span class="hljs-number">421</span>)
-  at scala.reflect.internal.tpe.<span class="hljs-type">TypeConstraints</span>$<span class="hljs-type">UndoLog</span>.undo(<span class="hljs-type">TypeConstraints</span>.scala:<span class="hljs-number">73</span>)
-  at org.apache.spark.sql.catalyst.<span class="hljs-type">ScalaReflection</span>.cleanUpReflectionObjects(<span class="hljs-type">ScalaReflection</span>.scala:<span class="hljs-number">904</span>)
-  at org.apache.spark.sql.catalyst.<span class="hljs-type">ScalaReflection</span>.cleanUpReflectionObjects$(<span class="hljs-type">ScalaReflection</span>.scala:<span class="hljs-number">903</span>)
-  at org.apache.spark.sql.catalyst.<span class="hljs-type">ScalaReflection</span>$.cleanUpReflectionObjects(<span class="hljs-type">ScalaReflection</span>.scala:<span class="hljs-number">49</span>)
-  at org.apache.spark.sql.catalyst.<span class="hljs-type">ScalaReflection</span>$.serializerForType(<span class="hljs-type">ScalaReflection</span>.scala:<span class="hljs-number">413</span>)
-  at org.apache.spark.sql.catalyst.encoders.<span class="hljs-type">ExpressionEncoder</span>$.apply(<span class="hljs-type">ExpressionEncoder</span>.scala:<span class="hljs-number">56</span>)
-  at org.apache.spark.sql.<span class="hljs-type">Encoders</span>$.product(<span class="hljs-type">Encoders</span>.scala:<span class="hljs-number">285</span>)
-  at org.apache.spark.sql.<span class="hljs-type">LowPrioritySQLImplicits</span>.newProductEncoder(<span class="hljs-type">SQLImplicits</span>.scala:<span class="hljs-number">251</span>)
-  at org.apache.spark.sql.<span class="hljs-type">LowPrioritySQLImplicits</span>.newProductEncoder$(<span class="hljs-type">SQLImplicits</span>.scala:<span class="hljs-number">251</span>)
-  at org.apache.spark.sql.<span class="hljs-type">SQLImplicits</span>.newProductEncoder(<span class="hljs-type">SQLImplicits</span>.scala:<span class="hljs-number">32</span>)
-  ... <span class="hljs-number">42</span> elided
-</code></pre>
-<p>As shown by the stack trace, this runtime error goes through <a href="https://github.com/apache/spark/blob/19cf208063f035d793d2306295a251a9af7e32f6/sql/catalyst/src/main/scala/org/apache/spark/sql/catalyst/ScalaReflection.scala" target="_blank">ScalaReflection</a> to try to derive an <code>Encoder</code> for <code>Dataset</code> schema. Beside the annoyance of not detecting this error at compile time, a more important limitation of the reflection-based approach is its inability to be extended for custom types. See this Stack Overflow question for a summary of the current situation (as of 2.0) in vanilla Spark: <a href="http://stackoverflow.com/a/39442829/2311362" target="_blank">How to store custom objects in a Dataset?</a>.</p>
-<p>Frameless introduces a new type class called <code>TypeEncoder</code> to solve these issues. <code>TypeEncoder</code>s are passed around as implicit parameters to every Frameless method to ensure that the data being manipulated is <code>Encoder</code>. It uses a standard implicit resolution coupled with shapeless&apos; type class derivation mechanism to ensure every that compiling code manipulates encodable data. For example, the <code>java.util.Date</code> example won&apos;t compile with Frameless:</p>
-<pre><code class="lang-scala"><span class="hljs-keyword">import</span> frameless.<span class="hljs-type">TypedDataset</span>
-<span class="hljs-keyword">import</span> frameless.syntax._
-</code></pre>
-<pre><code class="lang-scala"><span class="hljs-keyword">val</span> ds: <span class="hljs-type">TypedDataset</span>[<span class="hljs-type">DateRange</span>] = <span class="hljs-type">TypedDataset</span>.create(<span class="hljs-type">Seq</span>(<span class="hljs-type">DateRange</span>(<span class="hljs-keyword">new</span> java.util.<span class="hljs-type">Date</span>, <span class="hljs-keyword">new</span> java.util.<span class="hljs-type">Date</span>)))
-<span class="hljs-comment">// &lt;console&gt;:28: error: could not find implicit value for parameter encoder: frameless.TypedEncoder[DateRange]</span>
-<span class="hljs-comment">//        val ds: TypedDataset[DateRange] = TypedDataset.create(Seq(DateRange(new java.util.Date, new java.util.Date)))</span>
-<span class="hljs-comment">//                                                             ^</span>
-</code></pre>
-<p>Type class derivation takes care of recursively constructing (and proving the existence of) <code>TypeEncoder</code>s for case classes. The following works as expected:</p>
-<pre><code class="lang-scala"><span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Bar</span>(<span class="hljs-params">d: <span class="hljs-type">Double</span>, s: <span class="hljs-type">String</span></span>)</span>
-<span class="hljs-comment">// defined class Bar</span>
-
-<span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Foo</span>(<span class="hljs-params">i: <span class="hljs-type">Int</span>, b: <span class="hljs-type">Bar</span></span>)</span>
-<span class="hljs-comment">// defined class Foo</span>
-
-<span class="hljs-keyword">val</span> ds: <span class="hljs-type">TypedDataset</span>[<span class="hljs-type">Foo</span>] = <span class="hljs-type">TypedDataset</span>.create(<span class="hljs-type">Seq</span>(<span class="hljs-type">Foo</span>(<span class="hljs-number">1</span>, <span class="hljs-type">Bar</span>(<span class="hljs-number">1.1</span>, <span class="hljs-string">&quot;s&quot;</span>))))
-<span class="hljs-comment">// ds: frameless.TypedDataset[Foo] = [i: int, b: struct&lt;d: double, s: string&gt;]</span>
-
-ds.collect()
-<span class="hljs-comment">// res1: frameless.Job[Seq[Foo]] = frameless.Job$$anon$4@77bca0d3</span>
-</code></pre>
-<p>But any non-encodable in the case class hierarchy will be detected at compile time:</p>
-<pre><code class="lang-scala"><span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BarDate</span>(<span class="hljs-params">d: <span class="hljs-type">Double</span>, s: <span class="hljs-type">String</span>, t: java.util.<span class="hljs-type">Date</span></span>)</span>
-<span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FooDate</span>(<span class="hljs-params">i: <span class="hljs-type">Int</span>, b: <span class="hljs-type">BarDate</span></span>)</span>
-</code></pre>
-<pre><code class="lang-scala"><span class="hljs-keyword">val</span> ds: <span class="hljs-type">TypedDataset</span>[<span class="hljs-type">FooDate</span>] = <span class="hljs-type">TypedDataset</span>.create(<span class="hljs-type">Seq</span>(<span class="hljs-type">FooDate</span>(<span class="hljs-number">1</span>, <span class="hljs-type">BarDate</span>(<span class="hljs-number">1.1</span>, <span class="hljs-string">&quot;s&quot;</span>, <span class="hljs-keyword">new</span> java.util.<span class="hljs-type">Date</span>))))
-<span class="hljs-comment">// &lt;console&gt;:30: error: could not find implicit value for parameter encoder: frameless.TypedEncoder[FooDate]</span>
-<span class="hljs-comment">//        val ds: TypedDataset[FooDate] = TypedDataset.create(Seq(FooDate(1, BarDate(1.1, &quot;s&quot;, new java.util.Date))))</span>
-<span class="hljs-comment">//                                                           ^</span>
-</code></pre>
-<p>It should be noted that once derived, reflection-based <code>Encoder</code>s and implicitly derived <code>TypeEncoder</code>s have identical performance. The derivation mechanism is different, but the objects generated to encode and decode JVM objects in Spark&apos;s internal representation behave the same at runtime.</p>
-
-                                
-                                </section>
-                            
-    </div>
-    <div class="search-results">
-        <div class="has-results">
-            
-            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
-            <ul class="search-results-list"></ul>
-            
-        </div>
-        <div class="no-results">
-            
-            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
-            
-        </div>
-    </div>
-</div>
-
-                        </div>
-                    </div>
-                
-            </div>
-
-            
-                
-                <a href="TypedDatasetVsSparkDataset.html" class="navigation navigation-prev " aria-label="Previous page: Comparing TypedDatasets with Spark's Datasets">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                
-                
-                <a href="Injection.html" class="navigation navigation-next " aria-label="Next page: Injection: Creating Custom Encoders">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                
-            
-        
-    </div>
-
-    <script>
-        var gitbook = gitbook || [];
-        gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Typed Encoders in Frameless","level":"1.4","depth":1,"next":{"title":"Injection: Creating Custom Encoders","level":"1.5","depth":1,"path":"Injection.md","ref":"Injection.md","articles":[]},"previous":{"title":"Comparing TypedDatasets with Spark's Datasets","level":"1.3","depth":1,"path":"TypedDatasetVsSparkDataset.md","ref":"TypedDatasetVsSparkDataset.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"TypedEncoder.md","mtime":"2021-01-20T04:28:32.538Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2021-01-20T04:29:45.388Z"},"basePath":".","book":{"language":""}});
-        });
-    </script>
-</div>
-
-        
-    <script src="gitbook/gitbook.js"></script>
-    <script src="gitbook/theme.js"></script>
-    
-        
-        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
-        
-    
-        
-        <script src="gitbook/gitbook-plugin-search/search.js"></script>
-        
-    
-        
-        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
-        
-    
-        
-        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
-        
-    
-
-    </body>
+  </body>
 </html>
-
