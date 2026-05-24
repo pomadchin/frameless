@@ -17,7 +17,7 @@ val Scala213 = "2.13.18"
 
 ThisBuild / tlBaseVersion := "0.17"
 
-ThisBuild / crossScalaVersions := Seq(Scala213, Scala212)
+ThisBuild / crossScalaVersions := Seq(Scala213)
 ThisBuild / scalaVersion := Scala213
 ThisBuild / coverageScalacPluginVersion := "2.3.0"
 
@@ -61,7 +61,10 @@ lazy val `root-spark34` = project
   )
 
 lazy val core =
-  project.settings(name := "frameless-core").settings(framelessSettings)
+  project
+    .settings(name := "frameless-core")
+    .settings(framelessSettings)
+    .settings(crossScalaVersions := Seq(Scala213, Scala212))
 
 lazy val cats = project
   .settings(name := "frameless-cats")
@@ -379,11 +382,13 @@ lazy val spark40Settings = Seq[Setting[_]](
 )
 
 lazy val spark35Settings = Seq[Setting[_]](
+  crossScalaVersions := Seq(Scala213, Scala212),
   tlVersionIntroduced := Map("2.12" -> "0.17.0", "2.13" -> "0.17.0"),
   mimaPreviousArtifacts := Set.empty
 )
 
 lazy val spark34Settings = Seq[Setting[_]](
+  crossScalaVersions := Seq(Scala213, Scala212),
   tlVersionIntroduced := Map("2.12" -> "0.14.1", "2.13" -> "0.14.1"),
   mimaPreviousArtifacts := Set(
     organization.value %% moduleName.value
@@ -449,7 +454,9 @@ ThisBuild / tlCiReleaseBranches := Seq("master")
 ThisBuild / tlSitePublishBranch := Some("master")
 
 // Spark 3.x roots: 3.4 builds on 2.12 only, 3.5 builds on both 2.12 and 2.13.
-val spark3Roots = List("root-spark34", "root-spark35")
+val spark34Roots = List("root-spark34")
+val spark35Roots = List("root-spark35")
+val spark3Roots = spark34Roots ++ spark35Roots
 // Spark 4.x roots: Scala 2.13 only (Spark 4 dropped 2.12).
 val spark4Roots = List("root-spark40")
 val roots = spark3Roots ++ spark4Roots
@@ -464,10 +471,10 @@ ThisBuild / githubWorkflowBuildMatrixAdditions += "project" -> roots
 
 ThisBuild / githubWorkflowBuildMatrixExclusions ++=
   // 3.4 is 2.12-only; 3.5 builds both. Spark 4 is 2.13-only.
-  spark3Roots.init.map { project =>
+  spark34Roots.init.map { project =>
     MatrixExclude(Map("scala" -> "2.13", "project" -> project))
   } ++ spark4Roots.map { project =>
-    MatrixExclude(Map("scala" -> "2.12", "project" -> project))
+    MatrixExclude(Map("project" -> project))
   } ++
     // Pin each Spark line to its JDK: 3.x on JDK 8, 4.x on JDK 17.
     spark3Roots.map { project =>
